@@ -1,0 +1,110 @@
+:root {
+  --ink: #1d2230;
+  --paper: #f3efe2;
+  --gold: #ffc94d;
+  --red: #d62f2f;
+  --ghost: #bfe6ff;
+  --green: #74b84c;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #cfe8f2;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--paper);
+  user-select: none;
+}
+#game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+#ui { position: fixed; inset: 0; pointer-events: none; }
+
+.hud { position: absolute; inset: 0; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55); }
+.hud.hidden, .hidden { display: none !important; }
+
+.top-centre { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); text-align: center; padding: 8px 22px 9px; border-radius: 12px; background: rgba(20, 24, 34, 0.5); }
+.timer { font-size: 40px; font-weight: 800; letter-spacing: 1px; line-height: 1; }
+.body-name { margin-top: 4px; font-size: 17px; font-weight: 600; }
+.body-name .level { opacity: 0.85; font-weight: 500; }
+
+.top-left { position: absolute; top: 14px; left: 16px; width: min(300px, 30vw); }
+.bar { position: relative; height: 18px; border-radius: 9px; background: rgba(20, 24, 34, 0.55); overflow: hidden; margin-bottom: 6px; }
+.bar > .fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 9px; }
+.bar > .label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+.bar.health > .fill { background: linear-gradient(#ff6b5e, #d62f2f); }
+.bar.xp { height: 12px; }
+.bar.xp > .fill { background: linear-gradient(#ffe27a, #f0b429); }
+.bar.xp > .label { font-size: 10px; }
+
+.top-right { position: absolute; top: 10px; right: 12px; text-align: right; padding: 6px 10px 8px; border-radius: 12px; background: rgba(20, 24, 34, 0.5); }
+.ghost-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.ghosts { display: flex; gap: 6px; justify-content: flex-end; }
+.ghost-slot {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px dashed rgba(191, 230, 255, 0.45);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: #17364d; text-shadow: none;
+}
+.ghost-slot.filled { border: 2px solid #fff; background: var(--ghost); }
+.ghost-slot.fading { opacity: 0.4; }
+
+.bottom { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); width: min(560px, 80vw); }
+.life-head { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.life { position: relative; height: 16px; border-radius: 8px; background: rgba(20, 24, 34, 0.55); }
+.life > .fill { position: absolute; inset: 0 auto 0 0; border-radius: 8px; width: 0; background: var(--red); }
+.life > .fill.stay { background: var(--paper); }
+.life > .fill.up { background: var(--gold); }
+.life > .mark { position: absolute; top: -4px; bottom: -4px; width: 3px; margin-left: -1px; background: #fff; border-radius: 2px; }
+.life > .mark > span { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); font-size: 11px; white-space: nowrap; font-weight: 600; }
+.chips { display: flex; gap: 10px; justify-content: center; margin-top: 30px; }
+.chip {
+  position: relative; overflow: hidden; min-width: 170px; padding: 7px 12px;
+  border-radius: 8px; background: rgba(20, 24, 34, 0.55); font-size: 13px; font-weight: 600; text-align: center;
+}
+.chip > .fill { position: absolute; inset: 0 auto 0 0; width: 0; background: rgba(255, 255, 255, 0.28); }
+.chip > span { position: relative; }
+.chip.ready { outline: 2px solid rgba(255, 255, 255, 0.7); }
+.chip.off { opacity: 0.45; }
+.chip.letgo > .fill { background: rgba(214, 47, 47, 0.75); }
+.chip kbd { font: inherit; background: rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+
+.debug {
+  position: absolute; left: 16px; top: 70px; padding: 8px 10px; border-radius: 6px;
+  background: rgba(10, 12, 18, 0.7); font: 12px/1.5 ui-monospace, Consolas, monospace; white-space: pre; text-shadow: none;
+}
+
+.screen {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: rgba(18, 24, 34, 0.72); pointer-events: auto; text-align: center; padding: 20px;
+}
+.screen h1 { font-size: clamp(40px, 7vw, 76px); margin: 0 0 6px; letter-spacing: 1px; }
+.screen h2 { font-size: 34px; margin: 0 0 14px; }
+.screen p { margin: 4px 0; font-size: 16px; opacity: 0.92; }
+.screen .keys { margin: 18px 0; display: grid; grid-template-columns: auto auto; gap: 6px 18px; text-align: left; font-size: 15px; }
+.screen .keys b { text-align: right; }
+.button {
+  margin-top: 18px; padding: 12px 34px; border: 0; border-radius: 10px; background: var(--gold); color: var(--ink);
+  font: inherit; font-size: 20px; font-weight: 800; cursor: pointer;
+}
+.button:hover { filter: brightness(1.08); }
+.stats { display: flex; gap: 40px; margin: 8px 0 14px; }
+.stats div { font-size: 14px; opacity: 0.9; }
+.stats b { display: block; font-size: 34px; }
+.lives { margin: 0; padding: 0; list-style: none; max-height: 34vh; overflow: auto; font-size: 15px; text-align: left; }
+.lives li { padding: 3px 0; }
+.lives .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; vertical-align: -1px; }
+
+.cards { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+.card {
+  width: 210px; padding: 18px 16px; border-radius: 12px; border: 3px solid transparent; background: var(--paper); color: var(--ink);
+  font: inherit; cursor: pointer; text-align: center;
+}
+.card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.card .num { font-size: 13px; opacity: 0.6; font-weight: 700; }
+.card .name { font-size: 20px; font-weight: 800; margin: 6px 0; }
+.card .text { font-size: 15px; }
+
+.wheel { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(18, 24, 34, 0.35); }
+.wheel canvas { width: min(380px, 60vh); height: min(380px, 60vh); }
+.wheel .verdict { margin-top: 12px; font-size: 22px; font-weight: 700; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
+.wheel .reborn { min-height: 44px; font-size: 34px; font-weight: 800; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
