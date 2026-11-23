@@ -60,7 +60,7 @@ export const COMBAT = {
   /** Seconds before the same enemy can hurt the player again. */
   touchIntervalSec: 1.0,
   /** After any hit the player cannot be hit again for this long. */
-  hitGraceSec: 0.2,
+  hitGraceSec: 0.5,
   /** Knockback speed decays by this factor per second (higher = shorter slide). */
   knockbackDecay: 8,
   /** Enemies being knocked back faster than this do not walk. */
@@ -107,8 +107,8 @@ export const XP = {
   collectRadius: 0.7,
   magnetSpeed: 16,
   /** Experience needed for level n+1 is base + perLevel * n. */
-  base: 6,
-  perLevel: 6,
+  base: 10,
+  perLevel: 18,
   choices: 3,
   orbCapacity: 512,
 } as const;
@@ -155,13 +155,20 @@ export const MOTION = {
 
 /** Autoplay bot (used by ?autoplay=1 and the automated test). */
 export const BOT = {
-  threatRange: 11,
-  dangerRange: 4,
-  dangerCount: 3,
+  /** Enemies closer than this push the bot away. */
+  threatRange: 6,
+  /** Enemies this close count as a crowd. */
+  dangerRange: 3,
+  /** A crowd this big makes the bot back off fully and use its ability. */
+  dangerCount: 5,
+  /** The bot closes to this share of its attack range. */
+  engageShare: 0.6,
+  /** Engage distance for bodies without a ranged or melee reach (eggs). */
+  engageMin: 1.5,
   orbRange: 18,
-  orbPull: 0.5,
+  orbPull: 0.8,
   /** Sideways drift so the bot circles instead of running into a corner. */
-  circle: 0.55,
+  circle: 0.5,
   edgeStart: 50,
   edgeRange: 25,
   obstacleRange: 3,

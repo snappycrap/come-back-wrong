@@ -30,7 +30,7 @@ export type MoveDef =
 export type AttackDef =
   | { kind: 'arc'; intervalSec: number; range: number; arcDeg: number; damage: number; knockback: number }
   | { kind: 'nearest'; intervalSec: number; range: number; damage: number; knockback: number; look: 'bite' | 'tongue' }
-  | { kind: 'egg'; intervalSec: number; fuseSec: number; radius: number; damage: number; dropBehind: number }
+  | { kind: 'egg'; intervalSec: number; fuseSec: number; radius: number; damage: number; knockback: number; dropBehind: number }
   | { kind: 'none' };
 
 export type AbilityDef =
@@ -77,7 +77,7 @@ export const BODIES: readonly BodyDef[] = [
     level: 'noble',
     model: 'stag',
     color: 0xd9812e,
-    maxHealth: 120,
+    maxHealth: 100,
     radius: 0.7,
     move: { kind: 'run', speed: 9 },
     attack: { kind: 'arc', intervalSec: 0.8, range: 3, arcDeg: 120, damage: 14, knockback: 1 },
@@ -101,7 +101,7 @@ export const BODIES: readonly BodyDef[] = [
     level: 'common',
     model: 'ram',
     color: 0xf0c060,
-    maxHealth: 110,
+    maxHealth: 90,
     radius: 0.7,
     move: { kind: 'run', speed: 7 },
     attack: { kind: 'arc', intervalSec: 1.0, range: 2, arcDeg: 100, damage: 16, knockback: 4 },
@@ -125,7 +125,7 @@ export const BODIES: readonly BodyDef[] = [
     level: 'common',
     model: 'wolf',
     color: 0xc8452b,
-    maxHealth: 90,
+    maxHealth: 80,
     radius: 0.6,
     move: { kind: 'run', speed: 8.5 },
     attack: { kind: 'nearest', intervalSec: 0.5, range: 2.5, damage: 10, knockback: 0.5, look: 'bite' },
@@ -139,7 +139,7 @@ export const BODIES: readonly BodyDef[] = [
     level: 'humble',
     model: 'frog',
     color: 0xf08a1c,
-    maxHealth: 75,
+    maxHealth: 70,
     radius: 0.6,
     move: { kind: 'hop', distance: 3, durationSec: 0.34, restSec: 0.12, height: 0.9 },
     attack: { kind: 'nearest', intervalSec: 1.2, range: 6, damage: 12, knockback: 0, look: 'tongue' },
@@ -163,10 +163,10 @@ export const BODIES: readonly BodyDef[] = [
     level: 'humble',
     model: 'hen',
     color: 0xf6d23c,
-    maxHealth: 75,
+    maxHealth: 70,
     radius: 0.55,
     move: { kind: 'run', speed: 6 },
-    attack: { kind: 'egg', intervalSec: 1.5, fuseSec: 1, radius: 2.5, damage: 15, dropBehind: 0.9 },
+    attack: { kind: 'egg', intervalSec: 1.5, fuseSec: 1, radius: 2.5, damage: 15, knockback: 1, dropBehind: 0.9 },
     ability: { kind: 'glide', name: 'Glide', durationSec: 1.5, height: 2.4, cooldownSec: 6 },
     damageTaken: 1,
     thorns: 0,
@@ -177,7 +177,7 @@ export const BODIES: readonly BodyDef[] = [
     level: 'last',
     model: 'stone',
     color: 0xb9895a,
-    maxHealth: 100,
+    maxHealth: 120,
     radius: 0.7,
     move: { kind: 'run', speed: 1.5 },
     attack: { kind: 'none' },
